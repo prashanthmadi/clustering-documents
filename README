@@ -1,0 +1,59 @@
+ prashanth reddy madi
+
+  10754772
+ 
+
+
+
+First we need to download wikipediaminer database and set the CLASSPATH for 
+
+wikipedia-miner_1.1/wikipediaminer.jar
+mysql-connector-java-5.1.13/mysql-connector-java-5.1.13-bin.jar
+trove-3.0.0a5/lib/junit.jar
+morphadorner-2009-04-30/bin/
+morphadorner-2009-04-30/com.ibm.icu_3.6.1.v20070417.jar
+CRFChunker/crfchunker.jar
+CRFChunker/crfchunker.jar
+
+then Load the database in mysql by
+
+> javac Load.java
+> java -Xmx3g Load
+
+Run Clean.pl to build Master Document Graph
+
+> perl clean.pl
+
+Extract the Sentance Boundaries by
+
+> javac SentanceandTokenOffset.java
+> java SentanceandTokenOffset /path-to-master-document-file/
+
+Run CRF-Tagger and CRF-Chunker
+
+> sh sample.sh
+
+Run python scripts to extract Noun Phrase and Adjective Phrases
+
+> python extractphrases.py
+> python secondextractphrases.py
+> python thirdextractphrases.py
+
+ToRemove the Duplicates Run
+
+> perl duprm.pl
+
+Building Graph and Running DBSCAN
+
+> javac pras.java
+> java pras > outputfile
+
+Run K-Means on DBSCAN Output
+
+> perl kmeansin.pl > matrixfile
+> install kmeans package from cpan
+http://search.cpan.org/~avikak/Algorithm-KMeans-1.21/lib/Algorithm/KMeans.pm
+> perl kmeansout.pl > finaloutput
+
+this will give output the clusters
+
